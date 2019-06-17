@@ -5,6 +5,7 @@ import Router from 'vue-router';
 import Home from '@/views/Home';
 import Login from '@/views/Login';
 import SignUp from '@/views/SignUp';
+import Setting from '@/views/Setting';
 
 Vue.use(Router);
 
@@ -32,6 +33,14 @@ const router = new Router({
       path: '/home',
       name: 'Home',
       component: Home,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/setting',
+      name: 'Setting',
+      component: Setting,
       meta: {
         requiresAuth: true
       }

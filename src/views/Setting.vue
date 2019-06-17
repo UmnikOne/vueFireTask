@@ -1,9 +1,7 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <button @click="logout">Logout</button>
-    Welcome back - {{ this.username }}. <br>
-    You can edit your profile, on  <router-link to="/setting">setting page</router-link>.
+    Privet. {{ new Date() }}
+    <a href='#' @click="push()">test</a>
   </div>
 </template>
 
@@ -12,8 +10,10 @@ import firebase from 'firebase';
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 
+import { db } from '../main'
+
 export default {
-  name: 'home',
+  name: 'setting',
   components: {
     HelloWorld
   },
@@ -22,11 +22,19 @@ export default {
       username: '',
     };
   },
+  firestore () {
+    return {
+      locations: db.collection('users'),
+    }
+  },
   created() {
     var user = firebase.auth().currentUser;
-
+    var tets = firebase.firestore().collection('users');
+    console.log(tets);
     if (user) {
-      this.username = user.email;
+      for (var key in tets) {
+        console.log(tets[key]);
+      }
     } else {
       this.username = 'Guest'
     }
@@ -36,6 +44,10 @@ export default {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')
       })
+    },
+    push() {
+      console.log('test');
+      db.collection('users').add({ avatar: 'test', email: this.username, nickname: 'test2' });
     }
   }
 }
