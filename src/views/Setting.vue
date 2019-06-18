@@ -2,6 +2,7 @@
   <div class="home">
     Privet. {{ new Date() }}
     <a href='#' @click="push()">test</a>
+
   </div>
 </template>
 
@@ -20,6 +21,7 @@ export default {
   data() {
     return {
       username: '',
+      locations: [],
     };
   },
   firestore () {
@@ -32,9 +34,15 @@ export default {
     var tets = firebase.firestore().collection('users');
     console.log(tets);
     if (user) {
-      for (var key in tets) {
-        console.log(tets[key]);
-      }
+      firebase.firestore().collection('users').onSnapshot(querySnapshot => {
+              let postsArray = []
+
+              querySnapshot.forEach(doc => {
+                  let post = doc.data()
+                  post.id = doc.id
+                  console.log(post.id);
+              })
+          })
     } else {
       this.username = 'Guest'
     }

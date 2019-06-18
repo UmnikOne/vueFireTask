@@ -2,6 +2,12 @@ import Vue from 'vue';
 import firebase from 'firebase';
 import App from './App.vue';
 import router from './router';
+import mandMobile from 'mand-mobile';
+import 'mand-mobile/lib/mand-mobile.css';
+import Element from 'element-ui'
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false;
 
@@ -28,3 +34,7 @@ firebase.auth().onAuthStateChanged(() => {
 });
 
 export const db = firebase.firestore();
+
+Vue.use(mandMobile);
+Vue.use(Element)
+Vue.use(BootstrapVue)

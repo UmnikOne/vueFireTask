@@ -1,7 +1,9 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <b-row id="app">
+    <b-col></b-col>
+    <b-col cols="6" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 4px, rgba(0, 0, 0, 0.04) 0px 0px 6px;"><router-view/></b-col>
+    <b-col></b-col>
+  </b-row>
 </template>
 
 <style>
@@ -9,8 +11,8 @@
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+  margin-top: 40px;
 }
 #nav {
   padding: 30px;
