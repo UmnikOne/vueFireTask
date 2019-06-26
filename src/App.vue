@@ -1,9 +1,10 @@
 <template>
-  <b-row id="app">
-    <b-col></b-col>
-    <b-col cols="6" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 4px, rgba(0, 0, 0, 0.04) 0px 0px 6px;"><router-view/></b-col>
-    <b-col></b-col>
-  </b-row>
+<div class="container d-flex h-100">
+    <div class="row justify-content-center align-self-center">
+     <router-view/>
+    </div>
+</div>
+
 </template>
 
 <style>

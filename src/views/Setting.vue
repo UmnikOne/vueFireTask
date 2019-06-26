@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    Privet. {{ new Date() }}
+    Privet. {{ user.displayName }}
     <a href='#' @click="push()">test</a>
 
   </div>
@@ -22,6 +22,7 @@ export default {
     return {
       username: '',
       locations: [],
+      user: '',
     };
   },
   firestore () {
@@ -30,22 +31,22 @@ export default {
     }
   },
   created() {
-    var user = firebase.auth().currentUser;
+    this.user = firebase.auth().currentUser;
     var tets = firebase.firestore().collection('users');
     console.log(tets);
-    if (user) {
-      firebase.firestore().collection('users').onSnapshot(querySnapshot => {
-              let postsArray = []
+    // if (user) {
+    //   firebase.firestore().collection('users').onSnapshot(querySnapshot => {
+    //           let postsArray = []
 
-              querySnapshot.forEach(doc => {
-                  let post = doc.data()
-                  post.id = doc.id
-                  console.log(post.id);
-              })
-          })
-    } else {
-      this.username = 'Guest'
-    }
+    //           querySnapshot.forEach(doc => {
+    //               let post = doc.data()
+    //               post.id = doc.id
+    //               console.log(post.id);
+    //           })
+    //       })
+    // } else {
+    //   this.username = 'Guest'
+    // }
   },
   methods: {
     logout: function() {
@@ -55,7 +56,11 @@ export default {
     },
     push() {
       console.log('test');
-      db.collection('users').add({ avatar: 'test', email: this.username, nickname: 'test2' });
+      this.user.updateProfile({
+        displayName: 'UmnikOne',
+        photoURL: 'http://test/ololo'
+      });
+      // db.collection('users').add({ avatar: 'test', email: this.username, nickname: 'test2' });
     }
   }
 }
