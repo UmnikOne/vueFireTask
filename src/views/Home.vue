@@ -13,16 +13,19 @@
           </div>
           <hr>
           <li v-for="(expense, index) in tasks" :key="index">
-                    {{expense.task}}
+                    {{expense.task}} - {{expense.type}}
           </li>
-          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's
-          content.
         </b-card-text>
 
         <b-card-text>A second paragraph of text in the card.</b-card-text>
 
-        <a href="#" class="card-link">Card link</a>
-        <b-link href="#" class="card-link">Another link</b-link>
+        <hr>
+
+        <el-checkbox-group v-model="checkList">
+            <el-checkbox v-for="(expense, index) in tasks" :key="index" border size="medium">{{ expense.task }}</el-checkbox>
+          </el-checkbox-group>
+
+
       </b-card>
     </b-col>
     <b-col>
@@ -47,7 +50,7 @@
 
 <script>
 import firebase from 'firebase';
-import { db } from '../main'
+import { db, firestore } from '../main'
 
 export default {
   name: 'home',
@@ -64,27 +67,16 @@ export default {
         { value: 'monthly', text: 'Monthly' },
         { value: 'global', text: 'Global' },
       ],
+      checkList: ['selected and disabled','Option A'],
     };
   },
   firestore () {
     return {
-      tasks: firebase.collection('tasks'),
+      tasks: firestore.collection('tasks').orderBy('createdAt', 'desc'),
     };
   },
   created() {
     this.user = firebase.auth().currentUser;
-    this.tasks = db.collection('tasks').get();
-
-    db.collection('tasks').get().then(function(doc) {
-        if (doc.exists) {
-            console.log("Document data:", doc.data());
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
-    });
 
     console.log(this.tasks);
     if (this.user.displayName) {
