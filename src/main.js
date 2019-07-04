@@ -10,12 +10,13 @@ import 'element-ui/lib/theme-chalk/index.css';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import locale from 'element-ui/lib/locale/lang/en'
 
 require('firebase/firestore');
 
 Vue.use(VueFirestore);
 Vue.use(mandMobile);
-Vue.use(Element);
+Vue.use(Element, { locale });
 Vue.use(BootstrapVue);
 
 Vue.config.productionTip = false;
