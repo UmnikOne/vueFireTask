@@ -1,11 +1,11 @@
 <template>
-  <div class="login">
-    <h3>Sign In</h3>
-    <input type="text" v-model="email" placeholder="Email"><br>
-    <input type="password" v-model="password" placeholder="Password"><br>
-    <button @click="login">Connection</button>
-    <p>You don't have an account ? You can <router-link to="/sign-up">create one</router-link></p>
-  </div>
+  <el-card shadow="always">
+    <el-input type="text" class="login" v-model="email" placeholder="Email"></el-input>
+    <el-input type="password" class="login" v-model="password" placeholder="Password"></el-input>
+    <el-button type="primary" class="login" @click="login">Connection</el-button>
+
+    <p><center>You don't have an account ? You can <router-link to="/sign-up">create one</router-link></center></p>
+  </el-card>
 </template>
 
 <script>
@@ -36,22 +36,15 @@
 
 <style scoped>  /* "scoped" attribute limit the CSS to this component only */
   .login {
-    margin-top: 40px;
-  }
-  input {
-    margin: 10px 0;
-    width: 20%;
-    padding: 15px;
-  }
-  button {
     margin-top: 20px;
-    width: 10%;
-    cursor: pointer;
+    width: 100%;
   }
+  
   p {
     margin-top: 40px;
     font-size: 13px;
   }
+
   p a {
     text-decoration: underline;
     cursor: pointer;

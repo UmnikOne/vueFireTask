@@ -1,11 +1,12 @@
 <template>
-  <div class="sign-up">
+  <el-card shadow="always">
     <p>Let's create a new account !</p>
-    <input type="text" v-model="email" placeholder="Email"><br>
-    <input type="password" v-model="password" placeholder="Password"><br>
-    <button @click="signUp">Sign Up</button>
-    <span>or go back to <router-link to="/login">login</router-link>.</span>
-  </div>
+    <el-input type="text" class="login" v-model="email" placeholder="Email"></el-input>
+    <el-input type="password" class="login" v-model="password" placeholder="Password"></el-input>
+    <el-button type="primary" class="login" @click="signUp">Sign Up</el-button>
+
+    <p><center>or go back to <router-link to="/login">login</router-link>.</center></p>
+  </el-card>
 </template>
 
  <script>
@@ -35,22 +36,18 @@
 </script>
 
  <style scoped>
-  .sign-up {
-    margin-top: 40px;
-  }
-  input {
-    margin: 10px 0;
-    width: 20%;
-    padding: 15px;
-  }
-  button {
-    margin-top: 10px;
-    width: 10%;
-    cursor: pointer;
-  }
-  span {
-    display: block;
-    margin-top: 20px;
-    font-size: 11px;
-  }
+.login {
+  margin-top: 20px;
+  width: 100%;
+}
+
+p {
+  margin-top: 40px;
+  font-size: 13px;
+}
+
+p a {
+  text-decoration: underline;
+  cursor: pointer;
+}
 </style>

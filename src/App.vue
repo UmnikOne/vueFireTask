@@ -1,30 +1,16 @@
 <template>
-<div class="container d-flex h-100">
-    <div class="row justify-content-center align-self-center">
-     <router-view/>
+  <div class="container d-flex h-100">
+    <div class="row justify-content-center align-self-center auto">
+      <router-view />
     </div>
-</div>
-
+  </div>
 </template>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+.auto {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
   margin-top: 40px;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
