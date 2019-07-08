@@ -3,8 +3,6 @@ import firebase from "firebase";
 import VueFirestore from "vue-firestore";
 import App from "./App.vue";
 import router from "./router";
-import mandMobile from "mand-mobile";
-import "mand-mobile/lib/mand-mobile.css";
 import Element from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import BootstrapVue from "bootstrap-vue";
@@ -15,7 +13,6 @@ import locale from "element-ui/lib/locale/lang/en";
 require("firebase/firestore");
 
 Vue.use(VueFirestore);
-Vue.use(mandMobile);
 Vue.use(Element, { locale });
 Vue.use(BootstrapVue);
 

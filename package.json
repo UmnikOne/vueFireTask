@@ -13,7 +13,6 @@
     "core-js": "^2.6.5",
     "element-ui": "^2.9.1",
     "firebase": "^6.2.0",
-    "mand-mobile": "^2.3.0",
     "vue": "^2.6.10",
     "vue-firestore": "^0.3.22",
     "vue-router": "^3.0.3"
