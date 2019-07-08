@@ -1,29 +1,29 @@
-# oday
+## Vue Task list with Firebase and Google Auth
+### Project setup
 
-## Project setup
+1. **Install dependencies**
 ```
 npm install
 ```
+2. Go to [firebase.google.com](https://firebase.google.com/ "firebase.google.com") and register new **Web** app.
 
-### Compiles and hot-reloads for development
+3.  Open **main.js**
+
+4.  Enter keys inside *config*
+```javascript
+    const config = {
+      apiKey: "XXXX",
+      authDomain: "XXXXXX.firebaseapp.com",
+      databaseURL: "https://XXXX.firebaseio.com",
+      projectId: "XXXX",
+      storageBucket: "XXX.appspot.com",
+      messagingSenderId: "XXXXXX"
+    };
+```
+5.  Open [Console](https://console.firebase.google.com "Console") and goto **Authentication**. Turn on Google account.
+
+6. Run
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+7. Open [http://localhost:8080](http://localhost:8080 "http://localhost:8080")
