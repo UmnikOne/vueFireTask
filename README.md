@@ -1,4 +1,7 @@
 ## Vue Task list with Firebase and Google Auth
+
+[![](https://user-images.githubusercontent.com/22861012/60805835-00a6c900-a18a-11e9-90bb-b0a815346b20.png)](https://user-images.githubusercontent.com/22861012/60805835-00a6c900-a18a-11e9-90bb-b0a815346b20.png)
+
 ### Project setup
 
 1. **Install dependencies**
