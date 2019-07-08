@@ -5,20 +5,49 @@
       <div>
         <b-tabs content-class="mt-3" align="center">
           <b-tab title="Daily" active>
-            <el-checkbox-group v-model="checkList">
-              <div v-for="(expense, index) in tasks" :key="index">
-                <el-checkbox v-if="expense.end !== true" :label="expense.task" border @click="updateItem(expense['.key'])">
-                {{ expense.task }} - 111233
-                <i  @click="deleteItem(expense['.key'])" class="el-icon-delete"></i>
-                </el-checkbox>
+            <div v-for="(expense, index) in tasks" :key="index">
+              <div v-if="expense.end !== true && expense.type === 'daily'" class="task">
+                <el-button  @click="updateItem(expense['.key'])" type="success" id="complete" icon="el-icon-check" size="mini"></el-button>
+                <i @click="deleteItem(expense['.key'])" id="delete" class="el-icon-delete"></i>
+                {{ expense.task }}
+                <br v-if="expense.day || expense.time">
+                <small v-if="expense.day" style="margin-right: 10px;">{{  new Date(expense.day.toDate()).toDateString() }}</small> <small v-if="expense.time">{{ expense.time }}</small>
+                <small v-if="expense.url"><br><a :href="expense.url" class="link" target="_blank"> {{ expense.url }} </a></small>
               </div>
-            </el-checkbox-group>
+            </div>
           </b-tab>
-          <b-tab title="Monthly"><p>I'm the second tab</p></b-tab>
-          <b-tab title="Global"><p>I'm the second tab</p></b-tab>
+          <b-tab title="Monthly">
+            <div v-for="(expense, index) in tasks" :key="index">
+              <div v-if="expense.end !== true && expense.type === 'monthly'" class="task">
+                <el-button  @click="updateItem(expense['.key'])" type="success" id="complete" icon="el-icon-check" size="mini"></el-button>
+                <i @click="deleteItem(expense['.key'])" id="delete" class="el-icon-delete"></i>
+                {{ expense.task }}
+                <br v-if="expense.day || expense.time">
+                <small v-if="expense.day" style="margin-right: 10px;">{{  new Date(expense.day.toDate()).toDateString() }}</small> <small v-if="expense.time">{{ expense.time }}</small>
+                <small v-if="expense.url"><br><a :href="expense.url" class="link" target="_blank"> {{ expense.url }} </a></small>
+              </div>
+            </div>
+          </b-tab>
+          <b-tab title="Global">
+            <div v-for="(expense, index) in tasks" :key="index">
+              <div v-if="expense.end !== true && expense.type === 'global'" class="task">
+                <el-button  @click="updateItem(expense['.key'])" type="success" id="complete" icon="el-icon-check" size="mini"></el-button>
+                <i @click="deleteItem(expense['.key'])" id="delete" class="el-icon-delete"></i>
+                {{ expense.task }}
+                <br v-if="expense.day || expense.time">
+                <small v-if="expense.day" style="margin-right: 10px;">{{  new Date(expense.day.toDate()).toDateString() }}</small> <small v-if="expense.time">{{ expense.time }}</small>
+                <small v-if="expense.url"><br><a :href="expense.url" class="link" target="_blank"> {{ expense.url }} </a></small>
+              </div>
+            </div>
+          </b-tab>
           <b-tab title="Ends Tasks">
             <div v-for="(expense, index) in tasks" :key="index">
-              <el-button v-if="expense.end == true" id="end_task" disabled>{{ expense.task }}</el-button>
+              <div v-if="expense.end == true" class="task">
+                {{ expense.task }}
+                <br v-if="expense.day || expense.time">
+                <small v-if="expense.day" style="margin-right: 10px;">{{  new Date(expense.day.toDate()).toDateString() }}</small> <small v-if="expense.time">{{ expense.time }}</small>
+                <small v-if="expense.url"><br><a :href="expense.url" class="link" target="_blank"> {{ expense.url }} </a></small>
+              </div>
             </div>
           </b-tab>
           <b-tab title="Add task">
@@ -46,7 +75,7 @@
                 <el-input
                   size="small"
                   placeholder="You can add URL"
-                  v-model="input3">
+                  v-model="url">
                 </el-input>
 
                 <div class="text-right">
@@ -62,7 +91,7 @@
     </b-card>
     <div id="footer">
       <center>
-        {{ this.username }} - <router-link to="/setting">Change name</router-link> - <a href="#" @click="logout">Logout</a>
+        {{ this.username }}  - <a href="#" @click="logout">Logout</a>
       </center>
     </div>
   </div>
@@ -81,6 +110,7 @@ export default {
       task: '',
       daypick: '',
       timepick: '',
+      url: '',
       selected: 'daily',
       tasks: [],
       checked: true,
@@ -96,15 +126,14 @@ export default {
   },
   firestore () {
     return {
-      tasks: firestore.collection('tasks').orderBy('createdAt', 'desc'),
+      tasks: firestore.collection('tasks').where('user', '==', firebase.auth().currentUser.email),
     };
   },
   created() {
     this.user = firebase.auth().currentUser;
 
-    console.log(this.tasks);
     if (this.user.displayName) {
-      this.username = this.user.displayName;
+      this.username = this.user.email;
     } else {
       this.username = 'Guest'
     }
@@ -117,19 +146,46 @@ export default {
     },
     push() {
       const createdAt = new Date();
-      db.collection('tasks').add({ user: this.user.email, task: this.task, type: this.selected, createdAt: createdAt });
+      db.collection('tasks').add({ user: this.user.email, task: this.task, type: this.selected, day: this.daypick, time: this.timepick, url: this.url, createdAt: createdAt });
+      this.$message({
+          message: 'Congrats, you added new task.',
+          type: 'success'
+        });
+      this.task = "";
     },
     deleteItem(key) {
-      db.collection('tasks').doc(key).delete();
+      this.$confirm('This will permanently delete this task. Continue?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          db.collection('tasks').doc(key).delete();
+        });
     },
     updateItem(key) {
-      db.collection('tasks').doc(key).update({end: true});
+      this.$confirm('Want you complete this task?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          db.collection('tasks').doc(key).update({end: true});
+        });
     },
   }
 }
 </script>
 
 <style>
+  .task {
+    margin: 10px;
+    padding: 6px;
+    padding-left: 15px;
+    border: 1px solid #d7dae2;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #606266;
+    font-weight: 500;
+  }
   #nextline {
     margin-bottom: 5px;
     margin-top: 10px;
@@ -137,12 +193,6 @@ export default {
 
   #footer{
     margin-top: 20px;
-  }
-
-  #end_task {
-    text-decoration: line-through;
-    width: 100%;
-    margin-bottom: 20px;
   }
 
   .el-checkbox.is-bordered.el-checkbox--medium {
@@ -156,5 +206,27 @@ export default {
 
   .el-checkbox__label {
     font-size: 16px;
+  }
+
+  #complete {
+    position: absolute;
+    right: 35px;
+    margin-top: -3px;
+    color: white;
+  }
+
+  #delete {
+    position: absolute;
+    right: 10px;
+    margin-top: 3px;
+    color: red;
+  }
+
+  .link {
+    text-overflow: ellipsis;
+    width: 200px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
   }
 </style>
