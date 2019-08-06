@@ -20,12 +20,12 @@ Vue.config.productionTip = false;
 
 let app = "";
 const config = {
-  apiKey: "AIzaSyD7SAoJL0njb8kjWe5K0gTFdUTbbinjD2M",
-  authDomain: "oday-8ff2e.firebaseapp.com",
-  databaseURL: "https://oday-8ff2e.firebaseio.com",
-  projectId: "oday-8ff2e",
-  storageBucket: "oday-8ff2e.appspot.com",
-  messagingSenderId: "554537556464"
+  apiKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  authDomain: "XXXX.firebaseapp.com",
+  databaseURL: "https://XXXX.firebaseio.com",
+  projectId: "XXXX",
+  storageBucket: "XXXX.appspot.com",
+  messagingSenderId: "XXXXXXXXXXX"
 };
 
 const fireApp = firebase.initializeApp(config);
